@@ -16,95 +16,63 @@
 	console.log('Keepin\'n it clean with an external script!');
 })();
 
-var array3 = []
-
 function myFunction() {
 	var xmlhttp = new XMLHttpRequest();
 	var url = "http://www.mattbowytz.com/simple_api.json?data=all";
 	var x = document.getElementById("search");
-	console.log(x.value);
 
-	if(array3.length === 0) {
-		var parentMech = document.getElementById("resultsGoHere");
-		var childMech = document.getElementById("results");
-		if (typeof childMech !== 'undefined' && typeof parentMech !== 'undefined' && typeof childMech !== 'Node') {
-			parentMech.innerHTML = ''
-		}
-	} else {
-		var parentMech = document.getElementById("resultsGoHere");
-		var trek = document.createElement("ul");
-		trek.id = "results"
-		parentMech.appendChild(trek);
+	var parentMech = document.getElementById("resultsGoHere");
+	if (typeof parentMech !== 'undefined') {
+		parentMech.innerHTML = ''
 	}
 
 	array3 = []
 
-	var parentEl = document.getElementById("dropdownSelect");
-	var childEl = document.getElementById("newOption");
-	if (typeof childEl !== 'undefined' && typeof parentEl !== 'undefined' && typeof childEl !== 'Node') {
-		parentEl.innerHTML = ''
-	}
+	if(x.value !== '') {
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', url, true);
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.send(x.value);
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState === 4) {
+				if(xhr.status === 200) {
+					var json = xhr.responseText;
+					var obj = JSON.parse(json);
 
-	var xhr = new XMLHttpRequest();
-    xhr.open('GET', url, true);
-    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhr.send(x.value);
-    xhr.onreadystatechange = function() {
-        if(xhr.readyState === 4) {
-            if(xhr.status === 200) {
-                var json = xhr.responseText;
-				console.log(json);
-				var obj = JSON.parse(json);
+					var array1 = obj["data"]["interests"];
+					var array1Length = array1.length;
 
-				var array1 = obj["data"]["interests"];
-				var array1Length = array1.length;
-
-				var array2 = obj["data"]["programming"];
-				var array2Length = array2.length;
-				
-				for(var i = 0; i < array1Length; i++) {
-					if(array1[i].startsWith(capitalizeFirstLetter(x.value))) {
-						array3.push(array1[i]);
+					var array2 = obj["data"]["programming"];
+					var array2Length = array2.length;
+					
+					for(var i = 0; i < array1Length; i++) {
+						if(array1[i].startsWith(capitalizeFirstLetter(x.value))) {
+							array3.push(array1[i]);
+						}
 					}
-				}
 
-				for(var i = 0; i < array2Length; i++) {
-					if(array2[i].startsWith(capitalizeFirstLetter(x.value))) {
-						array3.push(array2[i]);
+					for(var i = 0; i < array2Length; i++) {
+						if(array2[i].startsWith(capitalizeFirstLetter(x.value))) {
+							array3.push(array2[i]);
+						}
 					}
+					
+					results(array3);
+	 
 				}
-
-				console.log(array3);
-
-				var select = document.getElementById("dropdownSelect");
-				
-				for(var i = 0; i < array3.length; i++) {
-					var opt = array3[i];
-					var el = document.createElement("option");
-					el.id = "newOption"
-					el.textContent = opt;
-					el.value = opt;
-					el.setAttribute("size", array3.length);
-					select.appendChild(el);
-				}
- 
-            }
-        }
-    };
+			}
+		};
+    }
 }
 
-function results() {
-	var parentEl = document.getElementById("results");
+function results(array3) {
+	var parentEl = document.getElementById("resultsGoHere");
 	var childEl = document.getElementById("result");
 	if (typeof childEl !== 'undefined' && typeof parentEl !== 'undefined' && typeof childEl !== 'Node') {
 		parentEl.innerHTML = ''
 	}
 
-	console.log("Here");
-
-	var searchResults = document.getElementById("results");
-
-	console.log(array3);
+	var searchResults = document.getElementById("resultsGoHere");
 
 	for(var i = 0; i < array3.length; i++) {
 		var opt = array3[i];

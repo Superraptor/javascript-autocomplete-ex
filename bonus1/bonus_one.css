@@ -97,15 +97,28 @@ input:-moz-placeholder {
   text-align: center;
 }
 
-#dropdownSelect {
-  height: 60px;
-  width: 100%;
-  border-color: #888;
-  border-radius: 35px;
-  border-style: solid;
-  border-width: 5px;
-  color: #333;
-  font-family: 'Helvetica', sans-serif;
-  font-size: 26px;
-  margin-top: -5px;
+ul {
+  list-style-type: none;
+}
+
+li {
+  list-style-type: none;
+  display: inline;
+  margin-right: 10px;
+}
+
+a:link, a:visited {
+    background-color: white;
+    color: black;
+    border: 2px solid green;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+	font-family: 'Helvetica', sans-serif;
+}
+
+a:hover, a:active {
+    background-color: green;
+    color: white;
 }
